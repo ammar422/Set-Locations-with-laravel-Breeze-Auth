@@ -52,4 +52,12 @@ class RegisteredUserController extends Controller
 
         return redirect(route('dashboard', absolute: false));
     }
+    public function change_location($location_id)
+    {
+        if (!auth()->user()->addresses->contains($location_id)) {
+            abort(403);
+        }
+        auth()->user()->update(['current_location_id' => $location_id]);
+        return redirect()->route('dashboard');
+    }
 }
